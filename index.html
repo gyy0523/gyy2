@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/swiper-3.3.1.min.css">
+	<style>
+	*{margin: 0;padding: 0;}
+	html,body{
+		width: 100%;height: 100%;
+	}
+	body{
+		font-size: .32rem;
+	}
+	.swiper-container{
+		width: 100%;height: 100%;
+		display: flex;flex-direction: column;
+	}
+	.menu{
+	display: flex;position: relative;
+	height: .88rem;line-height: .88rem;
+	}
+	.menu span{
+	flex:1;text-align: center;
+	}
+	.active{
+		width: 25%;height: 5px;position: absolute;left:0;
+		bottom:0;background: #0f0;
+		transition: transform .3s;
+	}
+	.swiper-wrapper{
+		flex:1;
+	}
+	.swiper-wrapper section:nth-child(odd){
+		background: blue;
+		color: #fff;
+	}
+	.swiper-wrapper section:nth-child(even){
+		background: red;
+		color:#fff;
+	}
+	</style>
+</head>
+<body>
+<div class="swiper-container">
+	<menu class="menu"><span>一</span><span>二</span><span>三</span><span>四</span><div class="active"></div></menu>
+	<div class="swiper-wrapper">
+		<section class="swiper-slide">1111</section>
+		<section class="swiper-slide">2222</section>
+		<section class="swiper-slide">3333</section>
+		<section class="swiper-slide">4444</section>
+	</div>
+</div>
+	<script src='js/swiper-3.3.1.min.js'></script>
+	<script>
+		(function(doc,win){
+			var currentWidth=doc.documentElement.clientWidth;
+			doc.documentElement.style.fontSize=currentWidth/375*50+'px';
+		})(document,window)
+		var menus=document.querySelectorAll('.menu>span'),
+			wrapper=document.querySelector('.swiper-wrapper'),
+			active=document.querySelector('.active'),
+			//初始化swiper
+			myswiper=new Swiper('.swiper-container',{
+			initialSlide:1,
+			"onTransitionEnd":function(s){
+				active.style.transform="translate3d("+s.activeIndex*100+"%,0,0)";
+			},
+		})
+			//点击菜单切换选项卡
+		for(let i=0;i<menus.length;i++){
+			menus[i].addEventListener('touchend',function(){
+				wrapper.style.transform="translate3d("+-i*100+"%,0,0)";
+				wrapper.style.transition="transform .3s";
+				active.style.transform="translate3d("+i*100+"%,0,0)"
+			},false)
+		}
+	</script>
+</body>
+</html>
